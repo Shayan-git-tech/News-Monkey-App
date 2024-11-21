@@ -37,9 +37,9 @@ export default class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">Home</Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/">About</Link>
-              </li>
+              </li> */}
               <li className="nav-item dropdown">
                 <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categories

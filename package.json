@@ -1,8 +1,8 @@
 {
-  "name": "newsapp",
+  "name": "news-monkey-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://shayan-git-tech.github.io/news-monkey-app",
+  "homepage": "https://shayan-git-tech.github.io/News-Monkey-App/",
 
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
