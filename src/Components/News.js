@@ -19,35 +19,36 @@ export default class News extends Component {
   }
 
   async fetchArticles(page) {
-    this.setState({ loading: true });
-    const { setProgress, apiKey, category, searchTerm } = this.props;
-    setProgress(0)
+  this.setState({ loading: true });
+  const { setProgress, apiKey, category, searchTerm } = this.props;
+  setProgress(0);
 
-    try {
-      const query = searchTerm ? `q=${searchTerm}&` : "";
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&${query}pageSize=${this.props.pageSize}&page=${page}&apiKey=${apiKey}`
-      );
-      setProgress(30);
-      const data = await response.json();
-      setProgress(50);
+  try {
+    const query = searchTerm ? `q=${searchTerm}&` : "";
+    const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&${query}pageSize=${this.props.pageSize}&page=${page}&apiKey=${apiKey}`;
+    console.log("API URL:", apiUrl);
+    const response = await fetch(apiUrl);
+    setProgress(30);
+    const data = await response.json();
+    setProgress(50);
 
-      console.log(data)
+    console.log(data);
 
-      // Append new articles to the existing list
-      this.setState((prevState) => ({
-        articles: [...prevState.articles, ...data.articles],
-        loading: false,
-        totalResults: data.totalResults,
-        
-      }));
-      setProgress(100);
+    // Handle unexpected responses
+    const articles = Array.isArray(data.articles) ? data.articles : [];
 
-    } catch (error) {
-      console.error("Error fetching the news:", error);
-      this.setState({ loading: false });
-    }
+    this.setState((prevState) => ({
+      articles: [...prevState.articles, ...articles],
+      loading: false,
+      totalResults: data.totalResults || 0,
+    }));
+    setProgress(100);
+  } catch (error) {
+    console.error("Error fetching the news:", error);
+    this.setState({ loading: false });
   }
+}
+
 
   componentDidMount() {
     this.fetchArticles(this.state.page);
